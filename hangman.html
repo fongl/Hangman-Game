@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hangman</h1>
+    <p>HP:
+        <span id="user-hp">6</span>
+    </p>
+    <p>Word:
+        <span id="user-display"></span>
+    </p>
+    <p>Checked:
+        <span id="user-checked"></span>
+    </p>
+    <script>
+        var hpShow = document.getElementById("user-hp");
+        var displayShow = document.getElementById("user-display");
+        var checkedShow = document.getElementById("user-checked");
+        var hp = Math.floor(6);
+        var match = Math.floor(0);
+        var score = Math.floor(0);
+        var wordBank = ["HTML", "CSS", "JAVASCRIPT", "BOOTSTRAP", "ARRAYS"];
+        var answer = wordBank[Math.floor(Math.random() * wordBank.length)].split("");
+        var match = answer.length;
+        console.log(match);
+        var display = [];
+        var checked = [];
+        for (i = 0; i < answer.length; i++) {
+            display.push("_");
+        }
+        displayShow.textContent = display;
+        hpShow.textContent = hp;
+        console.log(wordBank);
+        console.log(checked);
+        console.log(display);
+        console.log(answer);
+        
+    </script>
+    <!-- 
+        <input class="entire" type="text"  name="input" value="" onkeydown="jesus(event)">            -->
+    <script>
+        //    document.addEventListener("keypress", jesus(event));
+        //    function jesus(event) {
+        //       var keyPressed = String.fromCharCode(event.keyCode);
+        //        console.log(keyPressed);
+        //    }
+        //while (hp > 0) {
+
+        document.onkeydown = function (event) {
+            var keyPressed = String.fromCharCode(event.keyCode);
+            if (event.keyCode < 91 && event.keyCode > 64) {
+                console.log(event.keyCode);
+                console.log(keyPressed);
+                if (checked.indexOf(keyPressed) == -1) {
+                    checked.push(keyPressed);
+                    checkedShow.textContent = checked;
+                    console.log(checked);
+                    if (answer.indexOf(keyPressed) != -1) {
+                        console.log("yay");
+                        for (var i = 0; i < answer.length; i++) {
+                            if (answer[i] == keyPressed) {
+                                display[i] = keyPressed;
+                                console.log(display);
+                                match--;
+                            }
+                            displayShow.textContent = display;
+                            console.log(match);
+                        }
+
+
+                    }
+                    else {
+                        hp--;
+                        hpShow.textContent = hp;
+                        if (hp < 1) {
+                            setTimeout(function(){location.reload(true);},2000);
+                            document.write("YOU LOSE");
+                        }
+                        console.log(hp);
+
+                    }
+                }
+                console.log(checked);
+            }
+
+        }
+
+
+
+
+
+    </script>
+</body>
+
+</html>
