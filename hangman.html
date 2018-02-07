@@ -10,6 +10,9 @@
 
 <body>
     <h1>Hangman</h1>
+    <p>Score:
+        <span id="user-score"> 0</span>
+    </p>
     <p>HP:
         <span id="user-hp">6</span>
     </p>
@@ -23,71 +26,86 @@
         var hpShow = document.getElementById("user-hp");
         var displayShow = document.getElementById("user-display");
         var checkedShow = document.getElementById("user-checked");
+        var scoreShow = document.getElementById("user-score");
         var hp = Math.floor(6);
-        var match = Math.floor(0);
-        var score = Math.floor(0);
-        var wordBank = ["HTML", "CSS", "JAVASCRIPT", "BOOTSTRAP", "ARRAYS"];
-        var answer = wordBank[Math.floor(Math.random() * wordBank.length)].split("");
-        var match = answer.length;
-        console.log(match);
-        var display = [];
-        var checked = [];
-        for (i = 0; i < answer.length; i++) {
-            display.push("_");
+        var match = Math.floor(0); //how many letters of the words the player got right
+        var score = Math.floor(0); 
+        var display = []; //the array to save the letters already gotten right
+        var checked = []; // to save all gussed letters
+        var answer = [];
+        var wordBank = ["HTML", "CSS", "JAVASCRIPT", "BOOTSTRAP", "ARRAYS", "OBJECT", "METHOD", "FUNCTION", "SCOPE", "CLASS", "SYNTAX"];
+        var wordsYouGotRight
+
+        function newWord() {
+            if (wordBank.length != 0) {
+                display =[];
+                var rand = Math.floor(Math.random() * wordBank.length);
+                console.log(rand);
+                //var
+                answer = wordBank[rand].split("");
+                wordBank.splice(rand, 1);
+                match = answer.length;
+                console.log(match);
+                for (i = 0; i < answer.length; i++) {
+                    display.push("_");
+                }
+                displayShow.textContent = display;
+                checked = [];
+                checkedShow.textContent = checked;
+            }
+            else {
+                setTimeout(function () { location.reload(true); }, 2000);
+                document.write("YOU WIN");
+            }
         }
-        displayShow.textContent = display;
+        //initialize game
+        newWord();
         hpShow.textContent = hp;
         console.log(wordBank);
         console.log(checked);
         console.log(display);
         console.log(answer);
-        
     </script>
-    <!-- 
-        <input class="entire" type="text"  name="input" value="" onkeydown="jesus(event)">            -->
-    <script>
-        //    document.addEventListener("keypress", jesus(event));
-        //    function jesus(event) {
-        //       var keyPressed = String.fromCharCode(event.keyCode);
-        //        console.log(keyPressed);
-        //    }
-        //while (hp > 0) {
 
+    <script>
         document.onkeydown = function (event) {
             var keyPressed = String.fromCharCode(event.keyCode);
             if (event.keyCode < 91 && event.keyCode > 64) {
-                console.log(event.keyCode);
-                console.log(keyPressed);
+                //console.log(event.keyCode);
+                //console.log(keyPressed);
                 if (checked.indexOf(keyPressed) == -1) {
                     checked.push(keyPressed);
                     checkedShow.textContent = checked;
-                    console.log(checked);
+                    //console.log(checked);
                     if (answer.indexOf(keyPressed) != -1) {
-                        console.log("yay");
+                        //console.log("yay");
                         for (var i = 0; i < answer.length; i++) {
                             if (answer[i] == keyPressed) {
                                 display[i] = keyPressed;
-                                console.log(display);
                                 match--;
                             }
-                            displayShow.textContent = display;
                             console.log(match);
+                            displayShow.textContent = display;
+
                         }
-
-
-                    }
+                        if (match == 0) {
+                            score++;
+                            scoreShow.textContent = score;
+                            setTimeout(function(){newWord();},2500);
+                        }
+                    } 
                     else {
                         hp--;
                         hpShow.textContent = hp;
                         if (hp < 1) {
-                            setTimeout(function(){location.reload(true);},2000);
+                            setTimeout(function () { location.reload(true); }, 2000);
                             document.write("YOU LOSE");
                         }
-                        console.log(hp);
+                        //console.log(hp);
 
                     }
                 }
-                console.log(checked);
+                //console.log(checked);
             }
 
         }
