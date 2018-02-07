@@ -9,6 +9,13 @@
 </head>
 
 <body>
+    <audio id="correctAudio">
+        <source src="http://soundfxcenter.com/video-games/sonic-the-hedgehog/8d82b5_Sonic_Ring_Sound_Effect.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="errorAudio">
+            <source src="http://www.orangefreesounds.com/wp-content/uploads/2014/08/Wrong-answer-sound-effect.mp3?_=1" type="audio/mpeg">
+    </audio>
+
     <h1>Web Dev Hangman</h1>
     <h3>Instructions:Get a word right to gain 1 point and 2 extra hp, you lose 1 hp per wrong letter</h3>
     <p>Score:
@@ -43,7 +50,8 @@
         var wordBank = ["HTML", "CSS", "JAVASCRIPT", "BOOTSTRAP", "ARRAYS", "OBJECT", "METHOD", "FUNCTION", "SCOPE", "CLASS", "SYNTAX"];
         var wordsRight = [];
         var tempString = "";
-
+        var correctSound = document.getElementById("correctAudio");
+        var errorSound = document.getElementById("errorAudio");
         function newWord() {
             if (wordBank.length != 0) {
                 display = [];
@@ -79,54 +87,56 @@
         document.onkeydown = function (event) {
             var keyPressed = String.fromCharCode(event.keyCode);
             //if (gameStart == 0) {
-               // newWord();
-           // }
-          //  else
-                if (event.keyCode < 91 && event.keyCode > 64) {
-                    //console.log(event.keyCode);
-                    //console.log(keyPressed);
-                    if (checked.indexOf(keyPressed) == -1) {
-                        checked.push(keyPressed);
-                        checkedShow.textContent = checked;
-                        //console.log(checked);
-                        if (answer.indexOf(keyPressed) != -1) {
-                            //console.log("yay");
-                            for (var i = 0; i < answer.length; i++) {
-                                if (answer[i] == keyPressed) {
-                                    display[i] = keyPressed;
-                                    match--;
-                                }
-                                console.log(match);
-                                displayShow.textContent = display;
-
+            // newWord();
+            // }
+            //  else
+            if (event.keyCode < 91 && event.keyCode > 64) {
+                //console.log(event.keyCode);
+                //console.log(keyPressed);
+                if (checked.indexOf(keyPressed) == -1) {
+                    checked.push(keyPressed);
+                    checkedShow.textContent = checked;
+                    //console.log(checked);
+                    if (answer.indexOf(keyPressed) != -1) {
+                        //console.log("yay");
+                        for (var i = 0; i < answer.length; i++) {
+                            if (answer[i] == keyPressed) {
+                                display[i] = keyPressed;
+                                match--;
                             }
-                            if (match == 0) {
-                                score++;
-                                hp += 2;
-                                //tempString = answer.join("");
-                                console.log(answer.join(""));
-                                wordsRight.push(answer.join(""));
-                                scoreShow.textContent = score;
-                                gottenShow.textContent = wordsRight;
-                                //setTimeout(function () { newWord(); }, 2000);
-                                setTimeout(newWord, 2000);
+                            console.log(match);
+                            displayShow.textContent = display;
 
-                            }
                         }
-                        else {
-                            hp--;
-                            hpShow.textContent = hp;
-                            if (hp < 1) {
-                                displayShow.textContent = answer;
-                                setTimeout(function () { document.write("YOU LOSE"); }, 2000);
-                                setTimeout(function () { location.reload(true); }, 4000);
-                            }
-                            //console.log(hp);
+                        if (match == 0) {
+                            score++;
+                            correctSound.play();
+                            hp += 2;
+                            //tempString = answer.join("");
+                            console.log(answer.join(""));
+                            wordsRight.push(answer.join(""));
+                            scoreShow.textContent = score;
+                            gottenShow.textContent = wordsRight;
+                            //setTimeout(function () { newWord(); }, 2000);
+                            setTimeout(newWord, 2000);
 
                         }
                     }
-                    //console.log(checked);
+                    else {
+                        hp--;
+                        errorSound.play();
+                        hpShow.textContent = hp;
+                        if (hp < 1) {
+                            displayShow.textContent = answer;
+                            setTimeout(function () { document.write("YOU LOSE"); }, 2000);
+                            setTimeout(function () { location.reload(true); }, 4000);
+                        }
+                        //console.log(hp);
+
+                    }
                 }
+                //console.log(checked);
+            }
 
         }
 
