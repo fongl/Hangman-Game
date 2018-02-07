@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <h1>Hangman</h1>
+    <h1>Web Dev Hangman</h1>
+    <h3>Instructions:Get a word right to gain 1 point and 2 extra hp, you lose 1 hp per wrong letter</h3>
     <p>Score:
         <span id="user-score"> 0</span>
     </p>
@@ -22,26 +23,32 @@
     <p>Checked:
         <span id="user-checked"></span>
     </p>
+    <p>
+        Words gotten:
+        <span id="user-gotten"></span>
+    </p>
     <script>
+        var gameStart = Math.floor(0);
         var hpShow = document.getElementById("user-hp");
         var displayShow = document.getElementById("user-display");
         var checkedShow = document.getElementById("user-checked");
         var scoreShow = document.getElementById("user-score");
+        var gottenShow = document.getElementById("user-gotten");
         var hp = Math.floor(6);
         var match = Math.floor(0); //how many letters of the words the player got right
-        var score = Math.floor(0); 
+        var score = Math.floor(0);
         var display = []; //the array to save the letters already gotten right
         var checked = []; // to save all gussed letters
         var answer = [];
         var wordBank = ["HTML", "CSS", "JAVASCRIPT", "BOOTSTRAP", "ARRAYS", "OBJECT", "METHOD", "FUNCTION", "SCOPE", "CLASS", "SYNTAX"];
-        var wordsYouGotRight
+        var wordsRight = [];
+        var tempString = "";
 
         function newWord() {
             if (wordBank.length != 0) {
-                display =[];
+                display = [];
                 var rand = Math.floor(Math.random() * wordBank.length);
                 console.log(rand);
-                //var
                 answer = wordBank[rand].split("");
                 wordBank.splice(rand, 1);
                 match = answer.length;
@@ -68,45 +75,58 @@
     </script>
 
     <script>
+        //Main structure
         document.onkeydown = function (event) {
             var keyPressed = String.fromCharCode(event.keyCode);
-            if (event.keyCode < 91 && event.keyCode > 64) {
-                //console.log(event.keyCode);
-                //console.log(keyPressed);
-                if (checked.indexOf(keyPressed) == -1) {
-                    checked.push(keyPressed);
-                    checkedShow.textContent = checked;
-                    //console.log(checked);
-                    if (answer.indexOf(keyPressed) != -1) {
-                        //console.log("yay");
-                        for (var i = 0; i < answer.length; i++) {
-                            if (answer[i] == keyPressed) {
-                                display[i] = keyPressed;
-                                match--;
+            //if (gameStart == 0) {
+               // newWord();
+           // }
+          //  else
+                if (event.keyCode < 91 && event.keyCode > 64) {
+                    //console.log(event.keyCode);
+                    //console.log(keyPressed);
+                    if (checked.indexOf(keyPressed) == -1) {
+                        checked.push(keyPressed);
+                        checkedShow.textContent = checked;
+                        //console.log(checked);
+                        if (answer.indexOf(keyPressed) != -1) {
+                            //console.log("yay");
+                            for (var i = 0; i < answer.length; i++) {
+                                if (answer[i] == keyPressed) {
+                                    display[i] = keyPressed;
+                                    match--;
+                                }
+                                console.log(match);
+                                displayShow.textContent = display;
+
                             }
-                            console.log(match);
-                            displayShow.textContent = display;
+                            if (match == 0) {
+                                score++;
+                                hp += 2;
+                                //tempString = answer.join("");
+                                console.log(answer.join(""));
+                                wordsRight.push(answer.join(""));
+                                scoreShow.textContent = score;
+                                gottenShow.textContent = wordsRight;
+                                //setTimeout(function () { newWord(); }, 2000);
+                                setTimeout(newWord, 2000);
+
+                            }
+                        }
+                        else {
+                            hp--;
+                            hpShow.textContent = hp;
+                            if (hp < 1) {
+                                displayShow.textContent = answer;
+                                setTimeout(function () { document.write("YOU LOSE"); }, 2000);
+                                setTimeout(function () { location.reload(true); }, 4000);
+                            }
+                            //console.log(hp);
 
                         }
-                        if (match == 0) {
-                            score++;
-                            scoreShow.textContent = score;
-                            setTimeout(function(){newWord();},2500);
-                        }
-                    } 
-                    else {
-                        hp--;
-                        hpShow.textContent = hp;
-                        if (hp < 1) {
-                            setTimeout(function () { location.reload(true); }, 2000);
-                            document.write("YOU LOSE");
-                        }
-                        //console.log(hp);
-
                     }
+                    //console.log(checked);
                 }
-                //console.log(checked);
-            }
 
         }
 
