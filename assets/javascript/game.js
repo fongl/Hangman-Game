@@ -16,7 +16,7 @@ $(document).ready(function () {
         {word:"HTML", hint:"standard markup language for creating Web pages."},
         {word:"CSS", hint:"describes how HTML elements are to be displayed."},
         {word:"JAVASCRIPT", hint:"programming language of HTML and the Web."},
-        {word:"BOOTSTRAP", hint:"popular open source toolkit for developin.g"},
+        {word:"BOOTSTRAP", hint:"popular open source toolkit for developing."},
         {word:"ARRAYS", hint:"special variable,can hold more than one value at a time."},
         {word:"OBJECT", hint:"collection of related  variables and functions."},
         {word:"METHOD", hint:"actions that can be performed on objects."},
