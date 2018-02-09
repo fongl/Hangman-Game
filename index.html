@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>  
+    <audio id="correctAudio">
+        <source src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-10157/zapsplat_multimedia_game_star_win_gain_x1_12387.mp3"
+            type="audio/mpeg">
+    </audio>
+    <audio id="errorAudio">
+        <source src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-three/leisure_retro_arcade_game_incorrect_error_tone.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <h1>&ltWeb Dev Hangman&gt</h1>
+    <h3>&lt!--Instructions: Press a letter key to guess a letter, you lose 1 hp per wrong letter, game ends when hp
+        reaches 0, good luck!.--></h3>
+    <p>&ltScore&gt
+        <b>
+            <span id="user-score"> 0</span>
+        </b>&lt/Score&gt
+    </p>
+    <p>&ltHP&gt
+        <b>
+            <span id="user-hp">6</span>
+        </b> &lt/HP&gt
+    </p>
+    <p>&ltWord&gt
+        <b>
+            <span id="user-display"></span>
+        </b> &lt/Word&gt
+    </p>
+    <p>&ltHint&gt
+            <b>
+                <span id="user-hint"></span>
+            </b> &lt/Hint&gt
+        </p>
+    <p>&ltChecked&gt
+        <b>
+            <span id="user-checked"></span>
+        </b> &lt/Checked&gt
+    </p>
+    <p>
+        &lt Words gotten:&gt
+        <b>
+            <span id="user-gotten"></span>
+        </b> &lt /Words gotten:&gt
+    </p>
+
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
+
+</html>
